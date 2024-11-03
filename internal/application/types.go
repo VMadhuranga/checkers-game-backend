@@ -17,6 +17,11 @@ type createUserPayload struct {
 	ConfirmPassword string `json:"confirm_password,omitempty" validate:"eqfield=Password"`
 }
 
+type userSignInPayload struct {
+	Username string `json:"username,omitempty" validate:"required,alpha"`
+	Password string `json:"password,omitempty" validate:"required,alphanum"`
+}
+
 type validationError struct {
 	field, tag string
 }
