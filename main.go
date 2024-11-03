@@ -26,8 +26,10 @@ func main() {
 	}
 
 	app := application.Application{
-		Queries:  database.New(db),
-		Validate: validator.New(validator.WithRequiredStructEnabled()),
+		Queries:            database.New(db),
+		Validate:           validator.New(validator.WithRequiredStructEnabled()),
+		AccessTokenSecret:  os.Getenv("ACCESS_TOKEN_SECRET"),
+		RefreshTokenSecret: os.Getenv("REFRESH_TOKEN_SECRET"),
 	}
 
 	router := application.InitializeRouter(app)
