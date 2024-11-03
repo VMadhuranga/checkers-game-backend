@@ -8,7 +8,13 @@ var ErrValidatingPayload = errors.New("error validating payload")
 
 var ErrCreatingUser = errors.New("error creating user")
 var ErrExistingUser = errors.New("error existing user")
+var ErrGettingUserByUsername = errors.New("error getting user by username")
+
 var ErrHashingPassword = errors.New("error hashing password")
+var ErrComparingPasswords = errors.New("error comparing passwords")
+
+var ErrCreatingAccessToken = errors.New("error creating access token")
+var ErrCreatingRefreshToken = errors.New("error creating refresh token")
 
 var ErrLoadingEnv = errors.New("error creating user")
 var ErrOpeningDb = errors.New("error opening database")
