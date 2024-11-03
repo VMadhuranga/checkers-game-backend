@@ -23,6 +23,7 @@ func InitializeRouter(app Application) *chi.Mux {
 
 	v1Router := chi.NewRouter()
 
+	v1Router.Post("/sign_in", app.handleUserSignIn)
 	v1Router.Post("/sign_up", app.handleCreateUser)
 
 	router.Mount("/v1", v1Router)
