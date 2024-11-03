@@ -6,8 +6,9 @@ import (
 )
 
 type Application struct {
-	Queries  *database.Queries
-	Validate *validator.Validate
+	Queries                               *database.Queries
+	Validate                              *validator.Validate
+	AccessTokenSecret, RefreshTokenSecret string
 }
 
 type createUserPayload struct {
