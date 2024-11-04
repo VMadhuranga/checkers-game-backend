@@ -11,7 +11,7 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
-func (app application) handleCreateUser(w http.ResponseWriter, r *http.Request) {
+func (app application) handleUserSignUp(w http.ResponseWriter, r *http.Request) {
 	payload := createUserPayload{}
 	err := json.NewDecoder(r.Body).Decode(&payload)
 	if err != nil {
