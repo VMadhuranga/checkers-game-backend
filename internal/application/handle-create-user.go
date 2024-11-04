@@ -11,7 +11,7 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
-func (app Application) handleCreateUser(w http.ResponseWriter, r *http.Request) {
+func (app application) handleCreateUser(w http.ResponseWriter, r *http.Request) {
 	payload := createUserPayload{}
 	err := json.NewDecoder(r.Body).Decode(&payload)
 	if err != nil {
@@ -20,7 +20,7 @@ func (app Application) handleCreateUser(w http.ResponseWriter, r *http.Request) 
 		return
 	}
 
-	err = app.Validate.Struct(payload)
+	err = app.validate.Struct(payload)
 	if err != nil {
 		log.Printf("%s: %s", ErrValidatingPayload, err)
 		respondWithValidationError(
@@ -31,7 +31,7 @@ func (app Application) handleCreateUser(w http.ResponseWriter, r *http.Request) 
 		return
 	}
 
-	_, err = app.Queries.GetUserByUsername(r.Context(), payload.Username)
+	_, err = app.queries.GetUserByUsername(r.Context(), payload.Username)
 	if err == nil {
 		log.Printf("%s", ErrExistingUser)
 		respondWithValidationError(w, 409, validationErrorMessagesResponse{
@@ -47,7 +47,7 @@ func (app Application) handleCreateUser(w http.ResponseWriter, r *http.Request) 
 		return
 	}
 
-	err = app.Queries.CreateUser(r.Context(), database.CreateUserParams{
+	err = app.queries.CreateUser(r.Context(), database.CreateUserParams{
 		ID:       uuid.New(),
 		Username: payload.Username,
 		Password: string(hashedPassword),

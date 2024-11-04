@@ -5,10 +5,10 @@ import (
 	"github.com/go-playground/validator/v10"
 )
 
-type Application struct {
-	Queries                               *database.Queries
-	Validate                              *validator.Validate
-	AccessTokenSecret, RefreshTokenSecret string
+type application struct {
+	queries                               *database.Queries
+	validate                              *validator.Validate
+	accessTokenSecret, refreshTokenSecret string
 }
 
 type createUserPayload struct {

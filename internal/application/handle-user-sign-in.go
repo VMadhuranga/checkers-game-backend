@@ -10,7 +10,7 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
-func (app Application) handleUserSignIn(w http.ResponseWriter, r *http.Request) {
+func (app application) handleUserSignIn(w http.ResponseWriter, r *http.Request) {
 	payload := userSignInPayload{}
 	err := json.NewDecoder(r.Body).Decode(&payload)
 	if err != nil {
@@ -19,7 +19,7 @@ func (app Application) handleUserSignIn(w http.ResponseWriter, r *http.Request) 
 		return
 	}
 
-	err = app.Validate.Struct(payload)
+	err = app.validate.Struct(payload)
 	if err != nil {
 		log.Printf("%s: %s", ErrValidatingPayload, err)
 		respondWithValidationError(
@@ -30,7 +30,7 @@ func (app Application) handleUserSignIn(w http.ResponseWriter, r *http.Request) 
 		return
 	}
 
-	user, err := app.Queries.GetUserByUsername(r.Context(), payload.Username)
+	user, err := app.queries.GetUserByUsername(r.Context(), payload.Username)
 	if err != nil {
 		log.Printf("%s: %s", ErrGettingUserByUsername, err)
 		respondWithValidationError(w, 401, validationErrorMessagesResponse{
@@ -48,7 +48,7 @@ func (app Application) handleUserSignIn(w http.ResponseWriter, r *http.Request) 
 		return
 	}
 
-	accessToken, err := createJWT(30*time.Second, user.ID.String(), app.AccessTokenSecret)
+	accessToken, err := createJWT(30*time.Second, user.ID.String(), app.accessTokenSecret)
 	if err != nil {
 		log.Printf("%s: %s", ErrCreatingAccessToken, err)
 		respondWithError(w, 400, ErrCreatingAccessToken.Error())
@@ -56,7 +56,7 @@ func (app Application) handleUserSignIn(w http.ResponseWriter, r *http.Request) 
 	}
 
 	expiresAt := 1 * time.Minute
-	refreshToken, err := createJWT(expiresAt, user.ID.String(), app.RefreshTokenSecret)
+	refreshToken, err := createJWT(expiresAt, user.ID.String(), app.refreshTokenSecret)
 	if err != nil {
 		log.Printf("%s: %s", ErrCreatingRefreshToken, err)
 		respondWithError(w, 400, ErrCreatingRefreshToken.Error())
