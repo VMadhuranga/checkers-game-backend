@@ -9,6 +9,7 @@ var ErrValidatingPayload = errors.New("error validating payload")
 var ErrCreatingUser = errors.New("error creating user")
 var ErrExistingUser = errors.New("error existing user")
 var ErrGettingUserByUsername = errors.New("error getting user by username")
+var ErrGettingUserById = errors.New("error getting user by id")
 var ErrParsingUserIdToUUID = errors.New("error parsing user id to uuid")
 
 var ErrHashingPassword = errors.New("error hashing password")
