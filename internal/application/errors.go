@@ -10,7 +10,7 @@ var ErrCreatingUser = errors.New("error creating user")
 var ErrExistingUser = errors.New("error existing user")
 var ErrGettingUserByUsername = errors.New("error getting user by username")
 var ErrGettingUserById = errors.New("error getting user by id")
-var ErrParsingUserIdToUUID = errors.New("error parsing user id to uuid")
+var ErrParsingUserIdParamToUUID = errors.New("error parsing user id parameter to uuid")
 
 var ErrHashingPassword = errors.New("error hashing password")
 var ErrComparingPasswords = errors.New("error comparing passwords")
@@ -23,3 +23,6 @@ var ErrOpeningDb = errors.New("error opening database")
 var ErrListeningOnServer = errors.New("error listening on user")
 
 var ErrCreatingMockDb = errors.New("error creating mock database")
+
+var ErrValidatingBearerToken = errors.New("error validating bearer token")
+var ErrValidatingJwt = errors.New("error validating jwt")
