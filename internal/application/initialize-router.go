@@ -29,6 +29,12 @@ func InitializeRouter(app application) *chi.Mux {
 		r.Post("/sign_up", app.handleUserSignUp)
 	})
 
+	// private routes
+	v1Router.Group(func(r chi.Router) {
+		r.Use(app.authenticate)
+		r.Get("/users/{user_id}", app.handleGetUserById)
+	})
+
 	router.Mount("/v1", v1Router)
 
 	return router
