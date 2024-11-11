@@ -26,3 +26,5 @@ var ErrCreatingMockDb = errors.New("error creating mock database")
 
 var ErrValidatingBearerToken = errors.New("error validating bearer token")
 var ErrValidatingJwt = errors.New("error validating jwt")
+var ErrGettingJwtCookie = errors.New("error getting jwt cookie")
+var ErrParsingJwtSubToUUID = errors.New("error parsing jwt subject to uuid")
