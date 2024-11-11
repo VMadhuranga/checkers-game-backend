@@ -8,7 +8,7 @@ import (
 	"github.com/go-chi/cors"
 )
 
-func InitializeRouter(app application) *chi.Mux {
+func InitializeRouter(app *application) *chi.Mux {
 	router := chi.NewRouter()
 
 	router.Use(middleware.Logger)
