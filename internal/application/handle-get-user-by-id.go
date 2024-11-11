@@ -8,7 +8,7 @@ import (
 	"github.com/google/uuid"
 )
 
-func (app application) handleGetUserById(w http.ResponseWriter, r *http.Request) {
+func (app *application) handleGetUserById(w http.ResponseWriter, r *http.Request) {
 	userId, err := uuid.Parse(chi.URLParam(r, "user_id"))
 	if err != nil {
 		log.Printf("%s: %s", ErrParsingUserIdParamToUUID, err)

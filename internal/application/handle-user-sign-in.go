@@ -9,7 +9,7 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
-func (app application) handleUserSignIn(w http.ResponseWriter, r *http.Request) {
+func (app *application) handleUserSignIn(w http.ResponseWriter, r *http.Request) {
 	payload := userSignInPayload{}
 	err := json.NewDecoder(r.Body).Decode(&payload)
 	if err != nil {

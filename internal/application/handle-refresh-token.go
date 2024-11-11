@@ -7,7 +7,7 @@ import (
 	"github.com/google/uuid"
 )
 
-func (app application) handleRefreshToken(w http.ResponseWriter, r *http.Request) {
+func (app *application) handleRefreshToken(w http.ResponseWriter, r *http.Request) {
 	jwtCookie, err := r.Cookie("jwt")
 	if err != nil {
 		log.Printf("%s: %s", ErrGettingJwtCookie, err)

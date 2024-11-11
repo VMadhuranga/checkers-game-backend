@@ -8,7 +8,7 @@ import (
 	"github.com/google/uuid"
 )
 
-func (app application) authenticate(next http.Handler) http.Handler {
+func (app *application) authenticate(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		bearerToken := r.Header.Get("Authorization")
 		if bearerToken == "" {
