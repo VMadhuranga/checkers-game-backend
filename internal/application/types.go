@@ -1,15 +1,18 @@
 package application
 
 import (
+	"time"
+
 	"github.com/VMadhuranga/checkers-game-backend/internal/database"
 	"github.com/go-playground/validator/v10"
 	"github.com/google/uuid"
 )
 
 type application struct {
-	queries                               *database.Queries
-	validate                              *validator.Validate
-	accessTokenSecret, refreshTokenSecret string
+	queries                                 *database.Queries
+	validate                                *validator.Validate
+	accessTokenSecret, refreshTokenSecret   string
+	accessTokenExpTime, refreshTokenExpTime time.Duration
 }
 
 type createUserPayload struct {
