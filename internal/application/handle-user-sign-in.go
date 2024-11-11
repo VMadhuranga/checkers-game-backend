@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"log"
 	"net/http"
-	"time"
 
 	"github.com/go-playground/validator/v10"
 	"golang.org/x/crypto/bcrypt"
@@ -48,29 +47,21 @@ func (app application) handleUserSignIn(w http.ResponseWriter, r *http.Request) 
 		return
 	}
 
-	accessToken, err := createJWT(30*time.Second, user.ID.String(), app.accessTokenSecret)
+	accessToken, err := createJWT(app.accessTokenExpTime, user.ID.String(), app.accessTokenSecret)
 	if err != nil {
 		log.Printf("%s: %s", ErrCreatingAccessToken, err)
 		respondWithError(w, 400, ErrCreatingAccessToken.Error())
 		return
 	}
 
-	expiresAt := 1 * time.Minute
-	refreshToken, err := createJWT(expiresAt, user.ID.String(), app.refreshTokenSecret)
+	refreshToken, err := createJWT(app.refreshTokenExpTime, user.ID.String(), app.refreshTokenSecret)
 	if err != nil {
 		log.Printf("%s: %s", ErrCreatingRefreshToken, err)
 		respondWithError(w, 400, ErrCreatingRefreshToken.Error())
 		return
 	}
-	http.SetCookie(w, &http.Cookie{
-		Name:        "jwt",
-		Value:       refreshToken,
-		MaxAge:      int(expiresAt.Milliseconds()),
-		Secure:      true,
-		HttpOnly:    true,
-		SameSite:    http.SameSiteNoneMode,
-		Partitioned: true,
-	})
+
+	http.SetCookie(w, initializeJwtCookie(app.refreshTokenExpTime, refreshToken))
 
 	respondWithJson(
 		w,
