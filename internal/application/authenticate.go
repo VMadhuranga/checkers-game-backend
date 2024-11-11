@@ -1,10 +1,11 @@
 package application
 
 import (
-	"fmt"
 	"log"
 	"net/http"
 	"strings"
+
+	"github.com/google/uuid"
 )
 
 func (app application) authenticate(next http.Handler) http.Handler {
@@ -27,11 +28,24 @@ func (app application) authenticate(next http.Handler) http.Handler {
 			respondWithError(w, 401, ErrValidatingBearerToken.Error())
 		}
 
-		fmt.Println(token)
-		_, err := validateJwt(token, app.accessTokenSecret)
+		jwtSub, err := validateJwt(token, app.accessTokenSecret)
 		if err != nil {
 			log.Printf("%s: %s", ErrValidatingJwt, err)
 			respondWithError(w, 403, ErrValidatingJwt.Error())
+			return
+		}
+
+		userId, err := uuid.Parse(jwtSub)
+		if err != nil {
+			log.Printf("%s: %s", ErrParsingJwtSubToUUID, err)
+			respondWithError(w, 400, ErrParsingJwtSubToUUID.Error())
+			return
+		}
+
+		_, err = app.queries.GetUserById(r.Context(), userId)
+		if err != nil {
+			log.Printf("%s: %s", ErrGettingUserById, err)
+			respondWithError(w, 404, ErrGettingUserById.Error())
 			return
 		}
 
