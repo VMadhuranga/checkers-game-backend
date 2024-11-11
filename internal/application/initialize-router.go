@@ -27,6 +27,7 @@ func InitializeRouter(app application) *chi.Mux {
 	v1Router.Group(func(r chi.Router) {
 		r.Post("/sign_in", app.handleUserSignIn)
 		r.Post("/sign_up", app.handleUserSignUp)
+		r.Get("/refresh", app.handleRefreshToken)
 	})
 
 	// private routes
