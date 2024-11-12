@@ -40,3 +40,5 @@ type userResponse struct {
 	Id       uuid.UUID `json:"id,omitempty"`
 	Username string    `json:"username,omitempty"`
 }
+
+type userCtx string
