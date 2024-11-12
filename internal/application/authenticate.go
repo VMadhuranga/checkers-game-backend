@@ -1,15 +1,24 @@
 package application
 
 import (
+	"context"
 	"log"
 	"net/http"
 	"strings"
 
+	"github.com/go-chi/chi/v5"
 	"github.com/google/uuid"
 )
 
 func (app *application) authenticate(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		userIdParam, err := uuid.Parse(chi.URLParam(r, "user_id"))
+		if err != nil {
+			log.Printf("%s: %s", ErrParsingUserIdParamToUUID, err)
+			respondWithError(w, 404, ErrParsingUserIdParamToUUID.Error())
+			return
+		}
+
 		bearerToken := r.Header.Get("Authorization")
 		if bearerToken == "" {
 			log.Printf("%s: %s", ErrValidatingBearerToken, "missing bearer token")
@@ -42,13 +51,14 @@ func (app *application) authenticate(next http.Handler) http.Handler {
 			return
 		}
 
-		_, err = app.queries.GetUserById(r.Context(), userId)
-		if err != nil {
+		user, err := app.queries.GetUserById(r.Context(), userId)
+		if err != nil || userId != userIdParam {
 			log.Printf("%s: %s", ErrGettingUserById, err)
 			respondWithError(w, 404, ErrGettingUserById.Error())
 			return
 		}
 
-		next.ServeHTTP(w, r)
+		ctx := context.WithValue(r.Context(), userCtx("user"), user)
+		next.ServeHTTP(w, r.WithContext(ctx))
 	})
 }
