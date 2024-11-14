@@ -10,6 +10,7 @@ var ErrCreatingUser = errors.New("error creating user")
 var ErrExistingUser = errors.New("error existing user")
 var ErrGettingUserByUsername = errors.New("error getting user by username")
 var ErrGettingUserById = errors.New("error getting user by id")
+var ErrDeletingUserById = errors.New("error deleting user by id")
 var ErrParsingUserIdParamToUUID = errors.New("error parsing user id parameter to uuid")
 
 var ErrHashingPassword = errors.New("error hashing password")
