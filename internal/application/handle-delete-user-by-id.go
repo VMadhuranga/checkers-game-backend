@@ -14,7 +14,7 @@ func (app *application) handleDeleteUserById(w http.ResponseWriter, r *http.Requ
 	err := app.queries.DeleteUserById(r.Context(), user.ID)
 	if err != nil {
 		log.Printf("%s: %s", ErrDeletingUserById, err)
-		respondWithError(w, 400, ErrDeletingUserById.Error())
+		respondWithError(w, 500, ErrDeletingUserById.Error())
 		return
 	}
 
