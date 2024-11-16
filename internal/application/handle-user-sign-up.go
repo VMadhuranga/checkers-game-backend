@@ -52,9 +52,8 @@ func (app *application) handleUserSignUp(w http.ResponseWriter, r *http.Request)
 		Username: payload.Username,
 		Password: string(hashedPassword),
 	})
-
 	if err != nil {
-		log.Panicf("%s: %s", ErrCreatingUser, err)
+		log.Printf("%s: %s", ErrCreatingUser, err)
 		respondWithError(w, 500, ErrCreatingUser.Error())
 		return
 	}
