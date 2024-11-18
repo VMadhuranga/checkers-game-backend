@@ -17,6 +17,8 @@ func generateValidationErrorMessages(errors validator.ValidationErrors) validati
 			messages.Password = appendValidationErrorMessage(messages.Password, err)
 		case "ConfirmPassword":
 			messages.ConfirmPassword = appendValidationErrorMessage(messages.ConfirmPassword, err)
+		case "NewUsername":
+			messages.NewUsername = appendValidationErrorMessage(messages.NewUsername, err)
 		}
 	}
 
