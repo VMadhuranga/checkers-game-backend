@@ -25,4 +25,12 @@ var validationErrorMessages = map[validationError]string{
 		"ConfirmPassword",
 		"eqfield",
 	}: "Passwords do not match",
+	{
+		"NewUsername",
+		"required",
+	}: "New user name is required",
+	{
+		"NewUsername",
+		"alpha",
+	}: "New user name must contain letters only",
 }
