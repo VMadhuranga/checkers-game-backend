@@ -26,6 +26,10 @@ type userSignInPayload struct {
 	Password string `json:"password,omitempty" validate:"required,alphanum"`
 }
 
+type updateUsernamePayload struct {
+	NewUsername string `json:"new_username,omitempty" validate:"required,alpha"`
+}
+
 type validationError struct {
 	field, tag string
 }
@@ -34,6 +38,7 @@ type validationErrorMessagesResponse struct {
 	Username        []string `json:"username,omitempty"`
 	Password        []string `json:"password,omitempty"`
 	ConfirmPassword []string `json:"confirm_password,omitempty"`
+	NewUsername     []string `json:"new_username,omitempty"`
 }
 
 type userResponse struct {
