@@ -37,6 +37,7 @@ func InitializeRouter(app *application) *chi.Mux {
 		r.Get("/users/{user_id}", app.handleGetUserById)
 		r.Delete("/users/{user_id}", app.handleDeleteUserById)
 		r.Patch("/users/{user_id}/username", app.handleUpdateUsernameById)
+		r.Patch("/users/{user_id}/password", app.handleUpdatePasswordById)
 	})
 
 	router.Mount("/v1", v1Router)
