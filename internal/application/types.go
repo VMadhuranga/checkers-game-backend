@@ -30,15 +30,24 @@ type updateUsernamePayload struct {
 	NewUsername string `json:"new_username,omitempty" validate:"required,alpha"`
 }
 
+type updatePasswordPayload struct {
+	OldPassword        string `json:"old_password,omitempty" validate:"required,alphanum"`
+	NewPassword        string `json:"new_password,omitempty" validate:"required,alphanum,min=5"`
+	ConfirmNewPassword string `json:"confirm_new_password,omitempty" validate:"eqfield=NewPassword"`
+}
+
 type validationError struct {
 	field, tag string
 }
 
 type validationErrorMessagesResponse struct {
-	Username        []string `json:"username,omitempty"`
-	Password        []string `json:"password,omitempty"`
-	ConfirmPassword []string `json:"confirm_password,omitempty"`
-	NewUsername     []string `json:"new_username,omitempty"`
+	Username           []string `json:"username,omitempty"`
+	Password           []string `json:"password,omitempty"`
+	ConfirmPassword    []string `json:"confirm_password,omitempty"`
+	NewUsername        []string `json:"new_username,omitempty"`
+	OldPassword        []string `json:"old_password,omitempty"`
+	NewPassword        []string `json:"new_password,omitempty"`
+	ConfirmNewPassword []string `json:"confirm_new_password,omitempty"`
 }
 
 type userResponse struct {
